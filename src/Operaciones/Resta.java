@@ -1,9 +1,10 @@
 package Operaciones;
 
 public class Resta implements Operacion{
+    int number = 0;
     @Override
-    public int operar(int a, int b) {
-        return a - b;
+    public int operar(int b) {
+        return number-= b ;
     }
     @Override
     public float operar(float a, float b) {

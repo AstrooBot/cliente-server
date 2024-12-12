@@ -38,6 +38,10 @@ public class Cliente {
             this.escribir();
         }
         this.imprimir();
+        this.imprimir();
+        this.imprimir();
+        this.imprimir();
+        this.imprimir();
         this.cerrar();
 
     }

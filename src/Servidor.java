@@ -1,4 +1,7 @@
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import Operaciones.*;
 import java.io.*;
 
@@ -13,6 +16,8 @@ public class Servidor {
     Operacion multiplicacion = new Multiplicar();
     Operacion dividir = new Dividir();    
     Operacion[] operaciones = {suma, resta, multiplicacion, dividir};
+
+    List<Integer> numeros = new ArrayList<>();
 
     public Servidor(int puerto) {
 
@@ -51,16 +56,17 @@ public class Servidor {
         }
     }
 
-    public int operar(Operacion operador ,String line) {
-
-        number = operador.operar(number, Integer.parseInt(line));
+    public int operar(Operacion operador , List<Integer> lista) {
+        for (int elemento : lista) {
+            number = operador.operar(elemento);
+        }
         return number;
     }
 
-    public void calculos(String line) {
-        for (Operacion operator : operaciones) {
-            this.operar(operator, line);
-            this.notificar("Resultado de la operacion " + operator.getClass().getSimpleName() + " : " + number);
+    public void calculos(List<Integer> lista) {
+        for (Operacion operacion : operaciones) {
+            
+            this.notificar("El resultado de la operacion es: " + this.operar(operacion, lista));
         }
     }
 
@@ -70,8 +76,10 @@ public class Servidor {
             while (!line.equals("0")) {
                 line = in.readUTF();
                 System.out.println("Cliente " + numCliente + " : " + line);
+                numeros.add(Integer.parseInt(line));
 
             }
+            this.calculos(numeros);
             System.out.println("El cliente ha cerrado la conexion...");
         } catch (IOException e) {
             throw new RuntimeException(e);
